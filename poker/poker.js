@@ -4,10 +4,6 @@
  * After that the solution is to tell us what is the best poker set. EXAM
  */
 
-// TODO: Jedna karta moze byc wylosowana tylko raz + dodanie obslugi na wylosowanie:
-// TODO: Dodac obsluge najlepszej reki na podstawie: https://pl.wikipedia.org/wiki/Poker
-// po zadnym type wybrac najlepszy
-
 let possiblePokerSets = [];
 let cardsValues = [
   "2",
@@ -24,7 +20,7 @@ let cardsValues = [
   "K",
   "A"
 ];
-let cardsSuits = ["trefl", "karo", "pik", "kier"];
+let cardsSuits = ["trefl", "karo", "pik", "kier"]; //koniczyna, czerwony romb, lisc w ksztalcie serca, czerwone serce
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -38,7 +34,7 @@ function Card(value, suite) {
 function Hand(type, cardsArray, order) {
   this.type = type; //nazwa układu pokerowego
   this.cardsArray = cardsArray; //karty w układzie pokerowym
-  this.order = order; //kolejność porządkowa
+  this.order = order; //kolejność porządkowa, który najlepszy
 }
 
 function getRandomHand() {
@@ -46,20 +42,18 @@ function getRandomHand() {
 
   while (cards.length < 5) {
     let card = new Card(
-      cardsValues[getRandomInt(12)],
-      cardsSuits[getRandomInt(3)]
+      cardsValues[getRandomInt(13)],
+      cardsSuits[getRandomInt(4)]
     );
 
     // sprawdzam czy karty powtarzają się
     let found = cards.some(
       item => item.value === card.value && item.suite === card.suite
     );
-
     if (!found) {
       cards.push(card);
     }
   }
-
   return cards;
 }
 
@@ -91,9 +85,9 @@ function checkForPairs(pickedCardsValues, pickedCardsSuits) {
     for (i = 0; i < pickedCardsValues.length - 1; i++) {
       for (j = i + 1; j < pickedCardsValues.length; j++) {
         if (pickedCardsValues[i] == pickedCardsValues[j]) {
-          var temp1 = pickedCardsValues[i] + "_of_" + pickedCardsSuits[i];
-          var temp2 = pickedCardsValues[j] + "_of_" + pickedCardsSuits[j];
-          var hand = new Hand("Pair", [temp1, temp2], 1);
+          let card1 = pickedCardsValues[i] + "_of_" + pickedCardsSuits[i];
+          let card2 = pickedCardsValues[j] + "_of_" + pickedCardsSuits[j];
+          let hand = new Hand("Pair", [card1, card2], 1);
           possiblePokerSets.push(hand);
         }
       }
@@ -109,10 +103,10 @@ function checkForThrees(pickedCardsValues, pickedCardsSuits) {
         if (pickedCardsValues[i] == pickedCardsValues[j]) {
           for (k = j + 1; k < pickedCardsValues.length; k++) {
             if (pickedCardsValues[j] == pickedCardsValues[k]) {
-              let temp1 = pickedCardsValues[i] + "_of_" + pickedCardsSuits[i];
-              let temp2 = pickedCardsValues[j] + "_of_" + pickedCardsSuits[j];
-              let temp3 = pickedCardsValues[k] + "_of_" + pickedCardsSuits[k];
-              let hand = new Hand("Three of Kind", [temp1, temp2, temp3], 3);
+              let card1 = pickedCardsValues[i] + "_of_" + pickedCardsSuits[i];
+              let card2 = pickedCardsValues[j] + "_of_" + pickedCardsSuits[j];
+              let card3 = pickedCardsValues[k] + "_of_" + pickedCardsSuits[k];
+              let hand = new Hand("Three of Kind", [card1, card2, card3], 3);
               possiblePokerSets.push(hand);
             }
           }
@@ -126,7 +120,7 @@ function checkForThrees(pickedCardsValues, pickedCardsSuits) {
 function checkForFours(pickedCardsValues, pickedCardsSuits) {
   if (pickedCardsValues.length > 3) {
     for (i = 0; i < pickedCardsValues.length - 1; i++) {
-      let indexes = [i];
+      let indexes = [i]; //wartości kart
 
       for (j = i + 1; j < pickedCardsValues.length; j++) {
         if (pickedCardsValues[i] == pickedCardsValues[j]) {
@@ -134,30 +128,30 @@ function checkForFours(pickedCardsValues, pickedCardsSuits) {
         }
       }
       if (indexes.length == 4) {
-        let cardsArr = [];
+        let cardsArr = []; //wartosci kart wraz z kolorami
         for (i = 0; i < indexes.length; i++) {
-          let temp =
+          let card =
             pickedCardsValues[indexes[i]] +
             "_of_" +
             pickedCardsSuits[indexes[i]];
-          cardsArr.push(temp);
+          cardsArr.push(card);
         }
         let hand = new Hand("Four of Kind", cardsArr, 7);
         console.log(hand);
         possiblePokerSets.push(hand);
-        break;
+        break; //zatrzymujemy
       }
     }
   }
 }
 
 // Function to check for double pairs. Will not check in threes and fours, only strict double pairs
-function checkForDoublePairs(pickedCardsValues, pickedCardsSuits) {
-  var pairs = [];
+function checkForDoublePairs() {
+  let pairs = [];
 
   for (i = 0; i < possiblePokerSets.length; i++) {
     if (possiblePokerSets[i].type == "Pair") {
-      pairs.push(possiblePokerSets[i].cardsArray);
+      pairs.push(possiblePokerSets[i].cardsArray); // [Hand, Hand] => [Card, Card, Card]
     }
   }
 
@@ -165,9 +159,9 @@ function checkForDoublePairs(pickedCardsValues, pickedCardsSuits) {
     for (i = 0; i < pairs.length - 1; i++) {
       for (j = i + 1; j < pairs.length; j++) {
         if (pairs[i][0].charAt(0) != pairs[j][0].charAt(0)) {
-          let temp = pairs[i];
-          let temp2 = pairs[j];
-          let doublePairCards = temp.concat(temp2);
+          let cards1 = pairs[i];
+          let cards2 = pairs[j];
+          let doublePairCards = cards1.concat(cards2);
 
           let hand = new Hand("Double Pair", doublePairCards, 2);
           possiblePokerSets.push(hand);
@@ -178,6 +172,7 @@ function checkForDoublePairs(pickedCardsValues, pickedCardsSuits) {
 }
 
 // Function checking for full, only the biggest full is added to possiblehands
+
 function checkForFull() {
   let pairs = [];
   let threes = [];
@@ -244,6 +239,7 @@ function checkForFlush(pickedCardsValues, pickedCardsSuits) {
     let card = `${value}_of_${suit}`;
     list.push({ card: card, suit: suit, order: order });
   }
+
   // sorting list by suit
   list.sort(function(a, b) {
     return a.suit < b.suit ? -1 : a.suit == b.suit ? 0 : 1;
@@ -278,7 +274,6 @@ function checkForFlush(pickedCardsValues, pickedCardsSuits) {
 
 // Check for highest straight and for flush straight/royal flush
 function checkForStraight(pickedCardsValues, pickedCardsSuits) {
-  let values = [];
   let list = [];
   let highestStraightAdded = false;
   let highestStraightFlushAdded = false;
@@ -309,7 +304,7 @@ function checkForStraight(pickedCardsValues, pickedCardsSuits) {
       if (list[i].order != list[j].order + orderMove) {
         continue loop2;
       } else {
-        orderMove = orderMove + 1;
+        orderMove++;
       }
     }
     if (orderMove == 5) {
@@ -342,13 +337,13 @@ function checkForStraight(pickedCardsValues, pickedCardsSuits) {
       if (suitCount == 5 && highestStraightFlushAdded === false) {
         let name = "";
         let highestCard = getValueFromId(cards2[0]);
-
-        if (highestCard == "ace") {
+        let order;
+        if (highestCard == "A") {
           name = "Royal Flush";
-          let order = 9;
+          order = 9;
         } else {
           name = "Straight Flush";
-          let order = 8;
+          order = 8;
         }
 
         let hand2 = new Hand(name, cards2, order);

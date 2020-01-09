@@ -1,9 +1,9 @@
 // 1) Scale riddle. With 8 balls  EXAM [1,1,2,1,1,1,1,2]. One of the items will be change to two.
 // Indexes are to be chosen at random. Use comparison only two times.
 
-// let numbers = [1, 1, 1, 1, 1, 1, 2, 1];
+// let numbers = [1, 1, 1, 2, 1, 1, 1, 1];
 
-// let index = (function haveFun(array) {
+// let index = (function findMe(array) {
 //   let sum1 = array[0] + array[1] + array[2];
 //   let sum2 = array[3] + array[4] + array[5];
 
@@ -48,8 +48,8 @@ let grid = [
 
 function isValid(board, row, col, k) {
   for (let i = 0; i < 9; i++) {
-    const m = 3 * Math.floor(row / 3) + Math.floor(i / 3);
-    const n = 3 * Math.floor(col / 3) + (i % 3);
+    const m = 3 * Math.floor(row / 3);
+    const n = 3 * Math.floor(col / 3);
     if (board[row][i] == k || board[i][col] == k || board[m][n] == k) {
       return false;
     }
@@ -58,11 +58,13 @@ function isValid(board, row, col, k) {
 }
 
 function sudokuSolver(data) {
+  //grid
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       if (data[i][j] == 0) {
         for (let k = 1; k <= 9; k++) {
           if (isValid(data, i, j, k)) {
+            //czy mogę wstawić k w tym miejscu?
             data[i][j] = k;
             if (sudokuSolver(data)) {
               return true;

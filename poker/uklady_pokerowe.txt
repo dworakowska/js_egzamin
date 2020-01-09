@@ -1,0 +1,36 @@
+1) Poker królewski (Royal flush) - Poker złożony z kart od asa do dziesiątki.
+
+2) Poker (Straight flush) - Strit w kolorze. Gdy kilku graczy ma podany układ, 
+wygrywa gracz z wyższą wysoką kartą.
+
+3) Kareta  (Four of a kind) - Cztery karty o tej samej wartości. Gdy kilku graczy 
+ma podany układ, wygrywa gracz z mocniejszymi kartami, z których złożył układ. 
+Gdy nadal nie można wyłonić zwycięzcy, decyduje wysoka karta.
+
+4) Ful (Full house) - Układ składający się z trójki i pary. Gdy kilku graczy ma 
+podany układ, wygrywa gracz z silniejszą trójką. Gdy kilku graczy ma taką samą trójkę, 
+wygrywa gracz z silniejszą parą.
+
+5) Kolor (Flush) - 	Pięć kart w tym samym kolorze, nienastępujących po sobie. Gdy kilku 
+graczy ma podany układ, wygrywa układ z lepszą wysoką kartą.
+
+6) Strit (Straight) - Pięć kart następujących po sobie, przy czym co najmniej jedna musi 
+być w innym kolorze. As może być zarówno najwyższą kartą (strit A-K-D-W-10), jak i najniższą 
+(strit A-2-3-4-5), jednak zakazane jest tworzenie stritów, w których as ma podwójną rolę 
+(np. K-A-2-3-4) – taki układ jest wtedy wysoką kartą. Wygrywa układ z silniejszą wysoką kartą.
+
+7) Trójka (Three of a kind) - 	Trzy karty tej samej wartości. Gdy kilku graczy ma podany 
+układ, wygrywa gracz z mocniejszą wartością kart, z których ułożył trójkę. Gdy nadal nie 
+można wyłonić zwycięzcy, decyduje wysoka karta.
+
+8) Dwie pary (Two pair) - Układ składający się z dwóch różnych par. Gdy kilku graczy ma 
+podany układ, wygrywa gracz z mocniejszą starszą parą. Gdy starsze pary są takie same, 
+o wygranej decyduje młodsza para. Gdy nadal nie można wyłonić zwycięzcy, decyduje wysoka 
+karta.
+
+9) Para (One pair) - Dwie karty o takiej samej wartości. Gdy kilku graczy ma podany układ,
+ wygrywa układ z silniejszą parą. Gdy pary są takie same, o wygranej decyduje wysoka karta.
+
+10) Wysoka karta (High card) - 	Każdy układ kart, który nie kwalifikuje się do powyższych 
+układów. Gdy kilku graczy ma podany układ, wygrywa układ z najwyższą kolejną kartą.
+

@@ -1,8 +1,8 @@
 let poker = require("./poker");
 
 let randomHand = poker.getRandomHand();
-let pickedCardsValues = randomHand.map(element => element.value); // ["6", "6", "6", "3", "3"]
-let pickedCardsSuits = randomHand.map(element => element.suite); // ["trefl", "karo", "pik", "trefl", "karo"]
+let pickedCardsValues = randomHand.map(element => element.value); // ["7", "8", "9", "10", "J"]
+let pickedCardsSuits = randomHand.map(element => element.suite); //  ["trefl", "trefl", "trefl", "trefl", "trefl"]
 
 console.log("Wylosowano:");
 console.log(JSON.stringify(pickedCardsValues));
