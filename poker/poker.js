@@ -176,7 +176,6 @@ function checkForDoublePairs() {
 function checkForFull() {
   let pairs = [];
   let threes = [];
-  let usedCards = [];
 
   for (i = 0; i < possiblePokerSets.length; i++) {
     if (possiblePokerSets[i].type == "Three of Kind") {
@@ -186,43 +185,15 @@ function checkForFull() {
     }
   }
 
-  if (threes.length == 0) {
+  if (threes.length == 0 || pairs.length == 0) {
     return;
   }
 
-  let biggestThrees = [];
-  let max = 0;
+  let usedThrees = threes[0];
+  let usedPairs = pairs[0];
 
-  for (i = 0; i < threes.length; i++) {
-    let value = getValueFromId(threes[i][0]);
-    let order = cardsValues.indexOf(value);
-    if (order >= max) {
-      max = order;
-      biggestThrees = threes[i];
-    }
-  }
-  usedCards = biggestThrees;
-
-  let biggestPair = [];
-  max = 0;
-
-  loop1: for (i = 0; i < pairs.length; i++) {
-    for (j = 0; j < usedCards.length; j++) {
-      if (usedCards[j] == pairs[i][0] || usedCards[j] == pairs[i][1]) {
-        continue loop1;
-      }
-    }
-
-    let value = getValueFromId(pairs[i][0]);
-    let order = cardsValues.indexOf(value);
-    if (order >= max) {
-      max = order;
-      biggestPair = pairs[i];
-    }
-  }
-
-  if (biggestThrees.length != 0 && biggestPair.length != 0) {
-    let hand = new Hand("Full House", biggestThrees.concat(biggestPair), 6);
+  if (usedThrees.length != 0 && usedPairs.length != 0) {
+    let hand = new Hand("Full House", usedThrees.concat(usedPairs), 6);
     possiblePokerSets.push(hand);
   }
 }

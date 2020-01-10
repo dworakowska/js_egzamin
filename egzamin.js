@@ -1,32 +1,32 @@
 // 1) Scale riddle. With 8 balls  EXAM [1,1,2,1,1,1,1,2]. One of the items will be change to two.
 // Indexes are to be chosen at random. Use comparison only two times.
 
-// let numbers = [1, 1, 1, 2, 1, 1, 1, 1];
+let numbers = [1, 1, 1, 2, 1, 1, 1, 1];
 
-// let index = (function findMe(array) {
-//   let sum1 = array[0] + array[1] + array[2];
-//   let sum2 = array[3] + array[4] + array[5];
+let index = (function findMe(array) {
+  let sum1 = array[0] + array[1] + array[2];
+  let sum2 = array[3] + array[4] + array[5];
 
-//   if (sum1 === sum2) {
-//     return array[6] > array[7] ? 6 : 7;
-//   } else {
-//     if (sum1 > sum2) {
-//       if (array[0] == array[1]) {
-//         return 2;
-//       } else {
-//         return array[0] > array[1] ? 0 : 1;
-//       }
-//     } else {
-//       if (array[3] == array[4]) {
-//         return 5;
-//       } else {
-//         return array[3] > array[4] ? 3 : 4;
-//       }
-//     }
-//   }
-// })(numbers);
+  if (sum1 === sum2) {
+    return array[6] > array[7] ? 6 : 7;
+  } else {
+    if (sum1 > sum2) {
+      if (array[0] == array[1]) {
+        return 2;
+      } else {
+        return array[0] > array[1] ? 0 : 1;
+      }
+    } else {
+      if (array[3] == array[4]) {
+        return 5;
+      } else {
+        return array[3] > array[4] ? 3 : 4;
+      }
+    }
+  }
+})(numbers);
 
-// console.log(index);
+console.log(index);
 
 // 2) Create a solution that will tell us what poker set we have.
 // The solution is to deal us 5 cards from the standard 52 card deck.
@@ -67,6 +67,7 @@ function sudokuSolver(data) {
             //czy mogę wstawić k w tym miejscu?
             data[i][j] = k;
             if (sudokuSolver(data)) {
+              // rekurencja
               return true;
             } else {
               data[i][j] = 0;
